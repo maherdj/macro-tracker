@@ -3,6 +3,10 @@
 import React, { useState, MouseEvent } from "react";
 import Popup from "reactjs-popup";
 
+type Popup = {
+  close:() => void;
+}
+
 type cardProps = {
   mealType: string;
 };
@@ -16,7 +20,11 @@ type foodProps = {
 
 export default function Card({ mealType }: cardProps) {
   // const [foods, setFoods] = useState<string[]>([]);
+  const [foodName, setFoodName] = useState("");
+  const [protein, setProtein] = useState("");
 
+  const [fat, setFat] = useState("");
+  const [carbs, setCarbs] = useState("");
   // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
     <div className="w-11/12 mx-10 rounded-lg border-2">
@@ -47,7 +55,7 @@ export default function Card({ mealType }: cardProps) {
                 Close
               </button>
               {/* <div class="min-h-screenflex items-center "> */}
-              <form className="grid grid-cols-3 grid-rows-4 p-5 gap-y-2">
+              <form className="grid grid-cols-3 grid-rows-5 p-5 gap-y-2">
                 <div className="w-auto col-span-1">Food Name:</div>
                 <input className="col-span-2"></input>
 
@@ -59,6 +67,7 @@ export default function Card({ mealType }: cardProps) {
 
                 <div className="w-auto col-span-1">Fat (g):</div>
                 <input className="col-span-2"></input>
+                <button value="Submit"></button>
               </form>
               {/* </div> */}
             </div>

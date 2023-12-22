@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import MealCard from "./MealCard";
+import FoodCard from "./FoodCard";
 
 export default function Home() {
   // const [foods, setFood] = useState([]);

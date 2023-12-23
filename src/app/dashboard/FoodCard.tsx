@@ -15,7 +15,8 @@ export default function FoodCard({
   carbContent,
 }: foodProps) {
   return (
-    <div className="w-11/12 mx-10 rounded-lg border-2 mt-2">
+    <>
+      <div className="border-t-2 mb-2 mt-2 ml-5 mr-5"></div>
       <div className="grid grid-cols-6 pt-2 pl-2 pb-2">
         <div className="w-auto col-span-1">{food}</div>
         <div className="w-auto col-span-1">Protein: {proteinContent}g</div>
@@ -24,6 +25,7 @@ export default function FoodCard({
         <button className="w-auto col-span-1 text-right justify-end">Edit</button>
         <button className="w-auto col-span-1 justify-end">Delete</button>
       </div>
-    </div>
+    </>
+    
   );
 }

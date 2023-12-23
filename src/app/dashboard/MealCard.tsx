@@ -52,22 +52,21 @@ export default function Card({ mealType }: cardProps) {
   // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
     <>
-    <div className="border-t-2 mb-2 mt-2">
-
-    </div>
+    <div className="border-t-2 mb-2 mt-2"></div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="flow-root pt-2 pl-2">
-          <div className="float-left">{mealType}</div>
+          <div className="float-left text-lg">{mealType}</div>
           <Popup
             trigger={
               <button
                 type="submit"
                 value="+"
-                className="w-10 rounded-lg float-right mr-6 mb-2 border-2"
+                className="w-10 rounded-lg float-right mr-6 mb-2 border-2 text-lg"
                 // onClick={() => addFood}
               >
                 +
               </button>
+              
             }
             modal
             nested
@@ -128,9 +127,7 @@ export default function Card({ mealType }: cardProps) {
             )}
           </Popup>
         </div>
-      </div>
-
-      {foods.map((food) => (
+        {foods.map((food) => (
         <FoodCard
           food={food.food}
           proteinContent={food.proteinContent}
@@ -138,6 +135,9 @@ export default function Card({ mealType }: cardProps) {
           carbContent={food.carbContent}
         ></FoodCard>
       ))}
+      </div>
+
+      
     </>
   );
 }

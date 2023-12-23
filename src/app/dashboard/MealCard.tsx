@@ -52,6 +52,9 @@ export default function Card({ mealType }: cardProps) {
   // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
     <>
+    <div className="border-t-2 mb-2 mt-2">
+
+    </div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="flow-root pt-2 pl-2">
           <div className="float-left">{mealType}</div>

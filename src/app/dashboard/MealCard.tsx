@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useEffect } from "react";
 import { renderToNodeStream } from "react-dom/server";
 import Popup from "reactjs-popup";
 import FoodCard from "./FoodCard";
@@ -30,29 +30,59 @@ export default function Card({ mealType }: cardProps) {
   const [fat, setFat] = useState<number>(0);
   const [carbs, setCarbs] = useState<number>(0);
 
+  const [error, setError] = useState<string>("");
+
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
 
+    handleError();
+
     const uid = Date.now();
 
-    setFoods([
-      ...foods,
-      {
-        uid: uid,
-        meal: mealType,
-        food: foodName,
-        proteinContent: protein,
-        fatContent: fat,
-        carbContent: carbs,
-      },
-    ]);
+    if (error === "") {
+      setFoods([
+        ...foods,
+        {
+          uid: uid,
+          meal: mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+
+    setFoodName("");
+    setProtein(0);
+    setFat(0);
+    setCarbs(0);
 
     console.log(foods);
   };
+
+  const handleError = () => {
+    if (typeof fat === "number" && fat >= 0) {
+    } else {
+      setError("Please enter a valid number for fat content");
+      console.log("here");
+    }
+
+    if (typeof protein === "number" && protein >= 0) {
+    } else {
+      setError("Please enter a valid number for protein content");
+    }
+
+    if (typeof carbs === "number" && carbs >= 0) {
+    } else {
+      setError("Please enter a valid number for carbs content");
+    }
+  };
+
   // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
     <>
-    <div className="border-t-2 mb-2 mt-2"></div>
+      <div className="border-t-2 mb-2 mt-2"></div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="grid grid-cols-12 pt-2 pl-2">
           <div className="col-span-3 text-lg">{mealType}</div>
@@ -67,11 +97,9 @@ export default function Card({ mealType }: cardProps) {
                 value="+"
                 className="w-10 rounded-lg float-r mr-6 mb-2 border-2 text-lg"
                 // onClick={() => addFood}
-                
               >
                 +
               </button>
-              
             }
             modal
             nested
@@ -80,7 +108,6 @@ export default function Card({ mealType }: cardProps) {
               <div className="w-96 h-96 bg-white border-4">
                 <div className="flow-root">
                   <button
-                    className="button"
                     onClick={() => {
                       close();
                     }}
@@ -89,11 +116,12 @@ export default function Card({ mealType }: cardProps) {
                     X
                   </button>
                 </div>
-                
+
                 {/* <div class="min-h-screenflex items-center "> */}
                 <form
                   className="grid grid-cols-3 grid-rows-5 p-5 gap-y-2"
                   onSubmit={handleAdd}
+                  // onClick={close()}
                 >
                   <div className="w-auto col-span-1">Food Name:</div>
                   <input
@@ -130,6 +158,7 @@ export default function Card({ mealType }: cardProps) {
                   >
                     Submit
                   </button>
+                  <div>{error}</div>
                 </form>
                 {/* </div> */}
               </div>
@@ -137,16 +166,14 @@ export default function Card({ mealType }: cardProps) {
           </Popup>
         </div>
         {foods.map((food) => (
-        <FoodCard
-          food={food.food}
-          proteinContent={food.proteinContent}
-          fatContent={food.fatContent}
-          carbContent={food.carbContent}
-        ></FoodCard>
-      ))}
+          <FoodCard
+            food={food.food}
+            proteinContent={food.proteinContent}
+            fatContent={food.fatContent}
+            carbContent={food.carbContent}
+          ></FoodCard>
+        ))}
       </div>
-
-      
     </>
   );
 }

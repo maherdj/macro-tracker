@@ -54,15 +54,20 @@ export default function Card({ mealType }: cardProps) {
     <>
     <div className="border-t-2 mb-2 mt-2"></div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
-        <div className="flow-root pt-2 pl-2">
-          <div className="float-left text-lg">{mealType}</div>
+        <div className="grid grid-cols-12 pt-2 pl-2">
+          <div className="col-span-3 text-lg">{mealType}</div>
+          <div className="col-span-2 text-lg">Protein</div>
+          <div className="col-span-2 text-lg">Fats</div>
+          <div className="col-span-2 text-lg">Carbs</div>
+          <div className="col-span-2"></div>
           <Popup
             trigger={
               <button
                 type="submit"
                 value="+"
-                className="w-10 rounded-lg float-right mr-6 mb-2 border-2 text-lg"
+                className="w-10 rounded-lg float-r mr-6 mb-2 border-2 text-lg"
                 // onClick={() => addFood}
+                
               >
                 +
               </button>
@@ -72,15 +77,19 @@ export default function Card({ mealType }: cardProps) {
             nested
           >
             {(close) => (
-              <div className="w-96 h-96 bg-slate-400">
-                <button
-                  className="button"
-                  onClick={() => {
-                    close();
-                  }}
-                >
-                  Close
-                </button>
+              <div className="w-96 h-96 bg-white border-4">
+                <div className="flow-root">
+                  <button
+                    className="button"
+                    onClick={() => {
+                      close();
+                    }}
+                    className="mr-2 p-2 mt-2 rounded-lg border-2 float-right justify-end"
+                  >
+                    X
+                  </button>
+                </div>
+                
                 {/* <div class="min-h-screenflex items-center "> */}
                 <form
                   className="grid grid-cols-3 grid-rows-5 p-5 gap-y-2"
@@ -88,7 +97,7 @@ export default function Card({ mealType }: cardProps) {
                 >
                   <div className="w-auto col-span-1">Food Name:</div>
                   <input
-                    className="col-span-2"
+                    className="col-span-2 border-2"
                     type="text"
                     value={foodName}
                     onChange={(e) => setFoodName(e.target.value)}
@@ -96,26 +105,26 @@ export default function Card({ mealType }: cardProps) {
 
                   <div className="w-auto col-span-1">Protein (g):</div>
                   <input
-                    className="col-span-2"
+                    className="col-span-2 border-2"
                     value={protein}
                     onChange={(e) => setProtein(e.target.value)}
                   ></input>
 
                   <div className="w-auto col-span-1">Carbs (g):</div>
                   <input
-                    className="col-span-2"
+                    className="col-span-2 border-2"
                     value={carbs}
                     onChange={(e) => setCarbs(e.target.value)}
                   ></input>
 
                   <div className="w-auto col-span-1">Fat (g):</div>
                   <input
-                    className="col-span-2"
+                    className="col-span-2 border-2"
                     onChange={(e) => setFat(e.target.value)}
                     value={fat}
                   ></input>
                   <button
-                    className="w-auto col-span-3"
+                    className="w-auto col-span-3 border-2 rounded-lg mx-20"
                     type="sutton"
                     value="submit"
                   >

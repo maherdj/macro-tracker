@@ -1,9 +1,15 @@
+"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import MealCard from "./MealCard";
 import FoodCard from "./FoodCard";
 
+import AddFoodItemModal from "./AddFoodItemModal";
+import useFoodItemModalModal from "./useFoodItemModal";
+
 export default function Home() {
+  const { isOpen, toggle } = useFoodItemModalModal();
   // const [foods, setFood] = useState([]);
 
   // const addFood = (food: any) => {
@@ -23,6 +29,7 @@ export default function Home() {
       <MealCard mealType="Afternoon Snack" />
       <MealCard mealType="Dinner" />
       <MealCard mealType="Dessert" />
+      <AddFoodItemModal isOpen={isOpen} toggle={toggle}></AddFoodItemModal>
     </>
   );
 }

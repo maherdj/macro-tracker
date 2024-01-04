@@ -2,8 +2,9 @@
 
 import React, { useState, MouseEvent, useEffect } from "react";
 import { renderToNodeStream } from "react-dom/server";
-import Popup from "reactjs-popup";
 import FoodCard from "./FoodCard";
+import AddFoodItemModal from "./AddFoodItemModal";
+import useFoodItemModalModal from "./useFoodItemModal";
 
 type Popup = {
   close: () => void;
@@ -31,6 +32,8 @@ export default function Card({ mealType }: cardProps) {
   const [carbs, setCarbs] = useState<number>(0);
 
   const [error, setError] = useState<string>("");
+
+  const { isOpen, toggle } = useFoodItemModalModal();
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,28 +87,23 @@ export default function Card({ mealType }: cardProps) {
     <>
       <div className="border-t-2 mb-2 mt-2"></div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
-        <div className="grid grid-cols-12 pt-2 pl-2">
+        <div className="grid grid-cols-12 grid-rows-1 pt-2 pl-2">
           <div className="col-span-3 text-lg">{mealType}</div>
           <div className="col-span-2 text-lg">Protein</div>
           <div className="col-span-2 text-lg">Fats</div>
           <div className="col-span-2 text-lg">Carbs</div>
           <div className="col-span-2"></div>
-          <Popup
-            trigger={
-              <button
-                type="submit"
-                value="+"
-                className="w-10 rounded-lg float-r mr-6 mb-2 border-2 text-lg"
-                // onClick={() => addFood}
-              >
-                +
-              </button>
-            }
-            modal
-            nested
+          <button
+            type="submit"
+            value="+"
+            className="w-10 rounded-lg float-r mr-6 mb-2 border-2 text-lg"
+            onClick={toggle}
           >
-            {(close) => (
-              <div className="w-96 h-96 bg-white border-4">
+            +
+          </button>
+          <AddFoodItemModal isOpen={isOpen} toggle={toggle}></AddFoodItemModal>
+
+          {/* <div className="w-96 h-96 bg-white border-4">
                 <div className="flow-root">
                   <button
                     onClick={() => {
@@ -117,7 +115,6 @@ export default function Card({ mealType }: cardProps) {
                   </button>
                 </div>
 
-                {/* <div class="min-h-screenflex items-center "> */}
                 <form
                   className="grid grid-cols-3 grid-rows-5 p-5 gap-y-2"
                   onSubmit={handleAdd}
@@ -160,10 +157,7 @@ export default function Card({ mealType }: cardProps) {
                   </button>
                   <div>{error}</div>
                 </form>
-                {/* </div> */}
-              </div>
-            )}
-          </Popup>
+              </div> */}
         </div>
         {foods.map((food) => (
           <FoodCard

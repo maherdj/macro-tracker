@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, MouseEvent, useEffect } from "react";
+import React, { useState, MouseEvent, useEffect, useContext } from "react";
 import { renderToNodeStream } from "react-dom/server";
 import FoodCard from "./FoodCard";
 import AddFoodItemModal from "./AddFoodItemModal";
 import useFoodItemModalModal from "./useFoodItemModal";
+import { useMacroContext } from "./context";
+import error from "next/error";
 
 type Popup = {
   close: () => void;
@@ -14,73 +16,66 @@ type cardProps = {
   mealType: string;
 };
 
-type foodProps = {
-  uid: number;
-  meal: string;
-  food: string;
-  proteinContent: number;
-  fatContent: number;
-  carbContent: number;
-};
+// type foodProps = {
+//   uid: number;
+//   meal: string;
+//   food: string;
+//   proteinContent: number;
+//   fatContent: number;
+//   carbContent: number;
+// };
 
 export default function Card({ mealType }: cardProps) {
-  const [foods, setFoods] = useState<foodProps[]>([]);
-  const [foodName, setFoodName] = useState<string>("");
-  const [protein, setProtein] = useState<number>(0);
+  // const [foods, setFoods] = useState<foodProps[]>([]);
+  // const [foodName, setFoodName] = useState<string>("");
+  // const [protein, setProtein] = useState<number>(0);
 
-  const [fat, setFat] = useState<number>(0);
-  const [carbs, setCarbs] = useState<number>(0);
+  // const [fat, setFat] = useState<number>(0);
+  // const [carbs, setCarbs] = useState<number>(0);
 
-  const [error, setError] = useState<string>("");
+  // const [error, setError] = useState<string>("");
+
+  const mealName = mealType;
+
+  const {
+    foods,
+    setFoods,
+    foodName,
+    setFoodName,
+    protein,
+    setProtein,
+    fat,
+    setFat,
+    carbs,
+    setCarbs,
+  } = useMacroContext();
 
   const { isOpen, toggle } = useFoodItemModalModal();
 
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    handleError();
-
-    const uid = Date.now();
-
-    if (error === "") {
-      setFoods([
-        ...foods,
-        {
-          uid: uid,
-          meal: mealType,
-          food: foodName,
-          proteinContent: protein,
-          fatContent: fat,
-          carbContent: carbs,
-        },
-      ]);
-    }
-
-    setFoodName("");
-    setProtein(0);
-    setFat(0);
-    setCarbs(0);
-
-    console.log(foods);
+  const handleNewFood = () => {
+    setFat(fat);
+    setCarbs(carbs);
+    setProtein(protein);
+    setFoodName(foodName);
   };
 
-  const handleError = () => {
-    if (typeof fat === "number" && fat >= 0) {
-    } else {
-      setError("Please enter a valid number for fat content");
-      console.log("here");
-    }
+  // const handleError = () => {
+  //   if (typeof fat === "number" && fat >= 0) {
+  //   } else {
+  //     setError("Please enter a valid number for fat content");
+  //     console.log("here");
+  //   }
 
-    if (typeof protein === "number" && protein >= 0) {
-    } else {
-      setError("Please enter a valid number for protein content");
-    }
+  //   if (typeof protein === "number" && protein >= 0) {
+  //   } else {
+  //     setError("Please enter a valid number for protein content");
+  //   }
 
-    if (typeof carbs === "number" && carbs >= 0) {
-    } else {
-      setError("Please enter a valid number for carbs content");
-    }
-  };
+  //   if (typeof carbs === "number" && carbs >= 0) {
+  //   } else {
+  //     setError("Please enter a valid number for carbs content");
+  //   }
+  // };
 
   // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
@@ -101,7 +96,6 @@ export default function Card({ mealType }: cardProps) {
           >
             +
           </button>
-          <AddFoodItemModal isOpen={isOpen} toggle={toggle}></AddFoodItemModal>
 
           {/* <div className="w-96 h-96 bg-white border-4">
                 <div className="flow-root">
@@ -159,14 +153,33 @@ export default function Card({ mealType }: cardProps) {
                 </form>
               </div> */}
         </div>
-        {foods.map((food) => (
-          <FoodCard
-            food={food.food}
-            proteinContent={food.proteinContent}
-            fatContent={food.fatContent}
-            carbContent={food.carbContent}
-          ></FoodCard>
-        ))}
+        {foods.map(
+          (food) => {
+            return food.meal === mealName ? (
+              <FoodCard
+                food={food.food}
+                proteinContent={food.proteinContent}
+                fatContent={food.fatContent}
+                carbContent={food.carbContent}
+              ></FoodCard>
+            ) : (
+              <div></div>
+            );
+          }
+          //   food.meal === mealName (
+          //     <FoodCard
+          //   food={food.food}
+          //   proteinContent={food.proteinContent}
+          //   fatContent={food.fatContent}
+          //   carbContent={food.carbContent}
+          // ></FoodCard>
+          //   )
+        )}
+        <AddFoodItemModal
+          isOpen={isOpen}
+          toggle={toggle}
+          mealType={mealType}
+        ></AddFoodItemModal>
       </div>
     </>
   );

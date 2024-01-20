@@ -16,24 +16,23 @@ type cardProps = {
   mealType: string;
 };
 
-// type foodProps = {
-//   uid: number;
-//   meal: string;
-//   food: string;
-//   proteinContent: number;
-//   fatContent: number;
-//   carbContent: number;
-// };
+type totalMacroContent = {
+  totalProtein: number;
+  totalCarbs: number;
+  totalFat: number;
+};
+
+type foodProps = {
+  uid: number;
+  meal: string;
+  food: string;
+  proteinContent: number;
+  fatContent: number;
+  carbContent: number;
+};
 
 export default function Card({ mealType }: cardProps) {
-  // const [foods, setFoods] = useState<foodProps[]>([]);
-  // const [foodName, setFoodName] = useState<string>("");
-  // const [protein, setProtein] = useState<number>(0);
-
-  // const [fat, setFat] = useState<number>(0);
-  // const [carbs, setCarbs] = useState<number>(0);
-
-  // const [error, setError] = useState<string>("");
+  const [mealMacros, setMealMacros] = useState<totalMacroContent[]>([]);
 
   const mealName = mealType;
 
@@ -50,34 +49,23 @@ export default function Card({ mealType }: cardProps) {
     setCarbs,
   } = useMacroContext();
 
+  function iterateObject(obj: any) {
+    for (const key in obj) {
+      if (typeof obj[key] === "object" && obj[key] !== null) {
+        iterateObject(obj[key]);
+      } else {
+        if (key === "proteinContent") {
+          console.log(obj[key]);
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    iterateObject(foods);
+  }, [foods]);
+
   const { isOpen, toggle } = useFoodItemModalModal();
-
-  const handleNewFood = () => {
-    setFat(fat);
-    setCarbs(carbs);
-    setProtein(protein);
-    setFoodName(foodName);
-  };
-
-  // const handleError = () => {
-  //   if (typeof fat === "number" && fat >= 0) {
-  //   } else {
-  //     setError("Please enter a valid number for fat content");
-  //     console.log("here");
-  //   }
-
-  //   if (typeof protein === "number" && protein >= 0) {
-  //   } else {
-  //     setError("Please enter a valid number for protein content");
-  //   }
-
-  //   if (typeof carbs === "number" && carbs >= 0) {
-  //   } else {
-  //     setError("Please enter a valid number for carbs content");
-  //   }
-  // };
-
-  // const addFood = (food: string, e: MouseEvent<HTMLButtonElement>) => {};
   return (
     <>
       <div className="border-t-2 mb-2 mt-2"></div>
@@ -96,85 +84,19 @@ export default function Card({ mealType }: cardProps) {
           >
             +
           </button>
-
-          {/* <div className="w-96 h-96 bg-white border-4">
-                <div className="flow-root">
-                  <button
-                    onClick={() => {
-                      close();
-                    }}
-                    className="mr-2 p-2 mt-2 rounded-lg border-2 float-right justify-end"
-                  >
-                    X
-                  </button>
-                </div>
-
-                <form
-                  className="grid grid-cols-3 grid-rows-5 p-5 gap-y-2"
-                  onSubmit={handleAdd}
-                  // onClick={close()}
-                >
-                  <div className="w-auto col-span-1">Food Name:</div>
-                  <input
-                    className="col-span-2 border-2"
-                    type="text"
-                    value={foodName}
-                    onChange={(e) => setFoodName(e.target.value)}
-                  ></input>
-
-                  <div className="w-auto col-span-1">Protein (g):</div>
-                  <input
-                    className="col-span-2 border-2"
-                    value={protein}
-                    onChange={(e) => setProtein(e.target.value)}
-                  ></input>
-
-                  <div className="w-auto col-span-1">Carbs (g):</div>
-                  <input
-                    className="col-span-2 border-2"
-                    value={carbs}
-                    onChange={(e) => setCarbs(e.target.value)}
-                  ></input>
-
-                  <div className="w-auto col-span-1">Fat (g):</div>
-                  <input
-                    className="col-span-2 border-2"
-                    onChange={(e) => setFat(e.target.value)}
-                    value={fat}
-                  ></input>
-                  <button
-                    className="w-auto col-span-3 border-2 rounded-lg mx-20"
-                    type="sutton"
-                    value="submit"
-                  >
-                    Submit
-                  </button>
-                  <div>{error}</div>
-                </form>
-              </div> */}
         </div>
-        {foods.map(
-          (food) => {
-            return food.meal === mealName ? (
-              <FoodCard
-                food={food.food}
-                proteinContent={food.proteinContent}
-                fatContent={food.fatContent}
-                carbContent={food.carbContent}
-              ></FoodCard>
-            ) : (
-              <div></div>
-            );
-          }
-          //   food.meal === mealName (
-          //     <FoodCard
-          //   food={food.food}
-          //   proteinContent={food.proteinContent}
-          //   fatContent={food.fatContent}
-          //   carbContent={food.carbContent}
-          // ></FoodCard>
-          //   )
-        )}
+        {foods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
         <AddFoodItemModal
           isOpen={isOpen}
           toggle={toggle}

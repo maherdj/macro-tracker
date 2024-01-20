@@ -33,8 +33,6 @@ export default function AddFoodItemModal(props: ModalType) {
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // handleError();
-
     const uid = Date.now();
 
     // if (error === "") {
@@ -58,6 +56,10 @@ export default function AddFoodItemModal(props: ModalType) {
 
     console.log(foods);
   };
+
+  // const handleChange = (e) => {
+
+  // }
 
   return (
     <>
@@ -93,23 +95,25 @@ export default function AddFoodItemModal(props: ModalType) {
             <div className="col-span-1 justify-self-end pr-1">Protein</div>
             <input
               className="col-span-1 border-2"
+              type="number"
               value={protein}
-              onChange={(e) => setProtein(e.target.value)}
+              onChange={(e) => setProtein(e.target.valueAsNumber)}
               placeholder="in grams"
             ></input>
 
             <div className="w-auto col-span-1 justify-self-end pr-1">Carbs</div>
             <input
               className="col-span-1 border-2"
+              type="number"
               value={carbs}
-              onChange={(e) => setCarbs(e.target.value)}
+              onChange={(e) => setCarbs(e.target.valueAsNumber)}
               placeholder="in grams"
             ></input>
 
             <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
             <input
               className="col-span-1 border-2"
-              onChange={(e) => setFat(e.target.value)}
+              onChange={(e) => setFat(e.target.valueAsNumber)}
               value={fat}
               placeholder="in grams"
             ></input>

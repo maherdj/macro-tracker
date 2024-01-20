@@ -3,9 +3,9 @@ import MealCard from "./MealCard";
 
 type foodProps = {
   food: string;
-  proteinContent: number;
-  fatContent: number;
-  carbContent: number;
+  proteinContent: number | undefined;
+  fatContent: number | undefined;
+  carbContent: number | undefined;
 };
 
 export default function FoodCard({
@@ -22,10 +22,11 @@ export default function FoodCard({
         <div className="w-auto col-span-1">Protein: {proteinContent}g</div>
         <div className="w-auto col-span-1">Fat: {fatContent}g</div>
         <div className="w-auto col-span-1">Carbs: {carbContent}g</div>
-        <button className="w-auto col-span-1 text-right justify-end">Edit</button>
+        <button className="w-auto col-span-1 text-right justify-end">
+          Edit
+        </button>
         <button className="w-auto col-span-1 justify-end">Delete</button>
       </div>
     </>
-    
   );
 }

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, MouseEvent, useEffect, useContext } from "react";
+import React, {
+  useState,
+  MouseEvent,
+  useEffect,
+  useContext,
+  ReactNode,
+} from "react";
 import { renderToNodeStream } from "react-dom/server";
 import FoodCard from "./FoodCard";
 import AddFoodItemModal from "./AddFoodItemModal";
@@ -37,8 +43,18 @@ export default function Card({ mealType }: cardProps) {
   const mealName = mealType;
 
   const {
-    foods,
-    setFoods,
+    breakfastFoods,
+    setBreakfastFoods,
+    morningSnackFoods,
+    setMorningSnackFoods,
+    lunchFoods,
+    setLunchFoods,
+    afternoonSnackFoods,
+    setAfternoonSnackFoods,
+    dinnerFoods,
+    setDinnerFoods,
+    dessertFoods,
+    setDessertFoods,
     foodName,
     setFoodName,
     protein,
@@ -50,20 +66,24 @@ export default function Card({ mealType }: cardProps) {
   } = useMacroContext();
 
   function iterateObject(obj: any) {
+    let proteinTotal: number = 0;
     for (const key in obj) {
       if (typeof obj[key] === "object" && obj[key] !== null) {
         iterateObject(obj[key]);
       } else {
         if (key === "proteinContent") {
-          console.log(obj[key]);
+          proteinTotal = proteinTotal + obj[key];
+          // console.log(proteinTotal);
+          // console.log(obj[key]);
         }
       }
     }
   }
 
   useEffect(() => {
-    iterateObject(foods);
-  }, [foods]);
+    iterateObject(breakfastFoods);
+    console.log("render");
+  }, [breakfastFoods]);
 
   const { isOpen, toggle } = useFoodItemModalModal();
   return (
@@ -85,7 +105,11 @@ export default function Card({ mealType }: cardProps) {
             +
           </button>
         </div>
-        {foods.map((food) => {
+        {/* after trying to use a switch statement to conditionally render
+            the food objects of each meal, I resorted to making separate scripts
+            to render the foods in each meal (not the cleanes way to do this) */}
+
+        {breakfastFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
               food={food.food}
@@ -97,6 +121,71 @@ export default function Card({ mealType }: cardProps) {
             <div></div>
           );
         })}
+
+        {morningSnackFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {lunchFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {afternoonSnackFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+        {dinnerFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {dessertFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
         <AddFoodItemModal
           isOpen={isOpen}
           toggle={toggle}

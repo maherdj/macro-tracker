@@ -18,8 +18,18 @@ type foodProps = {
 
 export default function AddFoodItemModal(props: ModalType) {
   const {
-    foods,
-    setFoods,
+    breakfastFoods,
+    setBreakfastFoods,
+    morningSnackFoods,
+    setMorningSnackFoods,
+    lunchFoods,
+    setLunchFoods,
+    afternoonSnackFoods,
+    setAfternoonSnackFoods,
+    dinnerFoods,
+    setDinnerFoods,
+    dessertFoods,
+    setDessertFoods,
     foodName,
     setFoodName,
     protein,
@@ -35,26 +45,172 @@ export default function AddFoodItemModal(props: ModalType) {
 
     const uid = Date.now();
 
-    // if (error === "") {
-    setFoods([
-      ...foods,
-      {
-        uid: uid,
-        meal: props.mealType,
-        food: foodName,
-        proteinContent: protein,
-        fatContent: fat,
-        carbContent: carbs,
-      },
-    ]);
-    // }
+    // using if statements to add new entries into respective meal sections. This
+    // is probably not the best way to do this. May fix in the future.
+    if (props.mealType === "Breakfast") {
+      setBreakfastFoods([
+        ...breakfastFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+    console.log(breakfastFoods);
+
+    if (props.mealType === "Mid-Morning Snack") {
+      setMorningSnackFoods([
+        ...morningSnackFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+
+    if (props.mealType === "Lunch") {
+      setLunchFoods([
+        ...lunchFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+
+    if (props.mealType === "Afternoon Snack") {
+      setAfternoonSnackFoods([
+        ...afternoonSnackFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+
+    if (props.mealType === "Dinner") {
+      setDinnerFoods([
+        ...dinnerFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+
+    if (props.mealType === "Dessert") {
+      setDessertFoods([
+        ...dessertFoods,
+        {
+          uid: uid,
+          meal: props.mealType,
+          food: foodName,
+          proteinContent: protein,
+          fatContent: fat,
+          carbContent: carbs,
+        },
+      ]);
+    }
+    // switch (props.mealType) {
+    //   case "Breakfast":
+    //     return setBreakfastFoods([
+    //       ...breakfastFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   case "Mid-Morning Snack":
+    //     return setMorningSnackFoods([
+    //       ...morningSnackFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   case "Lunch":
+    //     return setLunchFoods([
+    //       ...lunchFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   case "Afternoon Snack":
+    //     return setAfternoonSnackFoods([
+    //       ...afternoonSnackFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   case "Dinner":
+    //     return setDinnerFoods([
+    //       ...dinnerFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   case "Dessert":
+    //     return setDessertFoods([
+    //       ...dessertFoods,
+    //       {
+    //         uid: uid,
+    //         meal: props.mealType,
+    //         food: foodName,
+    //         proteinContent: protein,
+    //         fatContent: fat,
+    //         carbContent: carbs,
+    //       },
+    //     ]);
+    //   default:
+    //     return undefined;
 
     setFoodName("");
     setProtein(0);
     setFat(0);
     setCarbs(0);
-
-    console.log(foods);
   };
 
   // const handleChange = (e) => {
@@ -113,6 +269,7 @@ export default function AddFoodItemModal(props: ModalType) {
             <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
             <input
               className="col-span-1 border-2"
+              type="number"
               onChange={(e) => setFat(e.target.valueAsNumber)}
               value={fat}
               placeholder="in grams"

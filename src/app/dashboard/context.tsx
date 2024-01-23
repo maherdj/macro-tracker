@@ -8,6 +8,12 @@ import React, {
   useState,
 } from "react";
 
+type totalMacros = {
+  proteinTotal: number;
+  carbsTotal: number;
+  fatTotal: number;
+};
+
 type foodProps = {
   uid: number;
   meal: string;
@@ -18,8 +24,20 @@ type foodProps = {
 };
 
 type MacroContext = {
-  foods: foodProps[];
-  setFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  breakfastMacros: totalMacros;
+  setBreakfastMacros: React.Dispatch<React.SetStateAction<totalMacros>>;
+  breakfastFoods: foodProps[];
+  setBreakfastFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  morningSnackFoods: foodProps[];
+  setMorningSnackFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  lunchFoods: foodProps[];
+  setLunchFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  afternoonSnackFoods: foodProps[];
+  setAfternoonSnackFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  dinnerFoods: foodProps[];
+  setDinnerFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
+  dessertFoods: foodProps[];
+  setDessertFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
   foodName: string;
   setFoodName: React.Dispatch<React.SetStateAction<string>>;
   protein: number | undefined;
@@ -39,7 +57,24 @@ type MacroContextProviderProps = {
 export default function MacroContextProvider({
   children,
 }: MacroContextProviderProps) {
-  const [foods, setFoods] = useState<foodProps[]>([]);
+  // meal total macro setState Hooks
+  const [breakfastMacros, setBreakfastMacros] = useState<totalMacros>({
+    proteinTotal: 0,
+    carbsTotal: 0,
+    fatTotal: 0,
+  });
+
+  // meal setState Hooks
+  const [breakfastFoods, setBreakfastFoods] = useState<foodProps[]>([]);
+  const [morningSnackFoods, setMorningSnackFoods] = useState<foodProps[]>([]);
+  const [lunchFoods, setLunchFoods] = useState<foodProps[]>([]);
+  const [afternoonSnackFoods, setAfternoonSnackFoods] = useState<foodProps[]>(
+    []
+  );
+  const [dinnerFoods, setDinnerFoods] = useState<foodProps[]>([]);
+  const [dessertFoods, setDessertFoods] = useState<foodProps[]>([]);
+
+  // meal content setState Hooks
   const [foodName, setFoodName] = useState<string>("");
   const [protein, setProtein] = useState<number | undefined>(0);
 
@@ -49,8 +84,20 @@ export default function MacroContextProvider({
   return (
     <MacroContext.Provider
       value={{
-        foods,
-        setFoods,
+        breakfastMacros,
+        setBreakfastMacros,
+        breakfastFoods,
+        setBreakfastFoods,
+        morningSnackFoods,
+        setMorningSnackFoods,
+        lunchFoods,
+        setLunchFoods,
+        afternoonSnackFoods,
+        setAfternoonSnackFoods,
+        dinnerFoods,
+        setDinnerFoods,
+        dessertFoods,
+        setDessertFoods,
         foodName,
         setFoodName,
         protein,

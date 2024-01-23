@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, MouseEvent, useEffect, useContext } from "react";
+import React, {
+  useState,
+  MouseEvent,
+  useEffect,
+  useContext,
+  ReactNode,
+} from "react";
 import { renderToNodeStream } from "react-dom/server";
 import FoodCard from "./FoodCard";
 import AddFoodItemModal from "./AddFoodItemModal";
@@ -33,12 +39,27 @@ type foodProps = {
 
 export default function Card({ mealType }: cardProps) {
   const [mealMacros, setMealMacros] = useState<totalMacroContent[]>([]);
+  const [proteinTotal, setProteinTotal] = useState<number>(0);
+  const [fatTotal, setFatTotal] = useState<number>(0);
+  const [carbTotal, setCarbTotal] = useState<number>(0);
 
   const mealName = mealType;
 
   const {
-    foods,
-    setFoods,
+    breakfastMacros,
+    setBreakfastMacros,
+    breakfastFoods,
+    setBreakfastFoods,
+    morningSnackFoods,
+    setMorningSnackFoods,
+    lunchFoods,
+    setLunchFoods,
+    afternoonSnackFoods,
+    setAfternoonSnackFoods,
+    dinnerFoods,
+    setDinnerFoods,
+    dessertFoods,
+    setDessertFoods,
     foodName,
     setFoodName,
     protein,
@@ -50,20 +71,80 @@ export default function Card({ mealType }: cardProps) {
   } = useMacroContext();
 
   function iterateObject(obj: any) {
+    // let proteinTotal: number = 0;
+
     for (const key in obj) {
       if (typeof obj[key] === "object" && obj[key] !== null) {
         iterateObject(obj[key]);
       } else {
+        // console.log(obj[key]);
         if (key === "proteinContent") {
-          console.log(obj[key]);
+          setProteinTotal((proteinTotal) => proteinTotal + obj[key]);
+        }
+        if (key === "fatContent") {
+          setFatTotal((fatTotal) => fatTotal + obj[key]);
+        }
+        if (key === "carbContent") {
+          setCarbTotal((carbTotal) => carbTotal + obj[key]);
         }
       }
     }
   }
 
   useEffect(() => {
-    iterateObject(foods);
-  }, [foods]);
+    if (mealType === "Breakfast") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(breakfastFoods);
+      console.log("render");
+    }
+    if (mealType === "Mid-Morning Snack") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(morningSnackFoods);
+      console.log("render");
+    }
+    if (mealType === "Lunch") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(lunchFoods);
+      console.log("render");
+    }
+    if (mealType === "Afternoon Snack") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(afternoonSnackFoods);
+      console.log("render");
+    }
+    if (mealType === "Dinner") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(dinnerFoods);
+      console.log("render");
+    }
+    if (mealType === "Dessert") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(dessertFoods);
+      console.log("render");
+    }
+  }, [
+    breakfastFoods,
+    morningSnackFoods,
+    lunchFoods,
+    afternoonSnackFoods,
+    dinnerFoods,
+    dessertFoods,
+    proteinTotal,
+    fatTotal,
+    carbTotal,
+  ]);
 
   const { isOpen, toggle } = useFoodItemModalModal();
   return (
@@ -72,9 +153,9 @@ export default function Card({ mealType }: cardProps) {
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="grid grid-cols-12 grid-rows-1 pt-2 pl-2">
           <div className="col-span-3 text-lg">{mealType}</div>
-          <div className="col-span-2 text-lg">Protein</div>
-          <div className="col-span-2 text-lg">Fats</div>
-          <div className="col-span-2 text-lg">Carbs</div>
+          <div className="col-span-2 text-lg">{proteinTotal}g Protein</div>
+          <div className="col-span-2 text-lg">{fatTotal}g Fat</div>
+          <div className="col-span-2 text-lg">{carbTotal}g Carbs</div>
           <div className="col-span-2"></div>
           <button
             type="submit"
@@ -85,7 +166,11 @@ export default function Card({ mealType }: cardProps) {
             +
           </button>
         </div>
-        {foods.map((food) => {
+        {/* after trying to use a switch statement to conditionally render
+            the food objects of each meal, I resorted to making separate scripts
+            to render the foods in each meal (not the cleanes way to do this) */}
+
+        {breakfastFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
               food={food.food}
@@ -97,6 +182,71 @@ export default function Card({ mealType }: cardProps) {
             <div></div>
           );
         })}
+
+        {morningSnackFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {lunchFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {afternoonSnackFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+        {dinnerFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
+        {dessertFoods.map((food) => {
+          return food.meal === mealName ? (
+            <FoodCard
+              food={food.food}
+              proteinContent={food.proteinContent}
+              fatContent={food.fatContent}
+              carbContent={food.carbContent}
+            ></FoodCard>
+          ) : (
+            <div></div>
+          );
+        })}
+
         <AddFoodItemModal
           isOpen={isOpen}
           toggle={toggle}

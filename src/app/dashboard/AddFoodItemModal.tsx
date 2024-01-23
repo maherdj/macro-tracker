@@ -18,6 +18,8 @@ type foodProps = {
 
 export default function AddFoodItemModal(props: ModalType) {
   const {
+    breakfastMacros,
+    setBreakfastMacros,
     breakfastFoods,
     setBreakfastFoods,
     morningSnackFoods,
@@ -60,7 +62,7 @@ export default function AddFoodItemModal(props: ModalType) {
         },
       ]);
     }
-    console.log(breakfastFoods);
+    // console.log(breakfastFoods);
 
     if (props.mealType === "Mid-Morning Snack") {
       setMorningSnackFoods([
@@ -257,6 +259,15 @@ export default function AddFoodItemModal(props: ModalType) {
               placeholder="in grams"
             ></input>
 
+            <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
+            <input
+              className="col-span-1 border-2"
+              type="number"
+              onChange={(e) => setFat(e.target.valueAsNumber)}
+              value={fat}
+              placeholder="in grams"
+            ></input>
+
             <div className="w-auto col-span-1 justify-self-end pr-1">Carbs</div>
             <input
               className="col-span-1 border-2"
@@ -266,14 +277,6 @@ export default function AddFoodItemModal(props: ModalType) {
               placeholder="in grams"
             ></input>
 
-            <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              onChange={(e) => setFat(e.target.valueAsNumber)}
-              value={fat}
-              placeholder="in grams"
-            ></input>
             <button
               className="w-auto col-span-1 border-2 rounded-lg mx-2"
               // type="sutton"

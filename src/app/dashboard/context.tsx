@@ -8,6 +8,12 @@ import React, {
   useState,
 } from "react";
 
+type totalMacros = {
+  proteinTotal: number;
+  carbsTotal: number;
+  fatTotal: number;
+};
+
 type foodProps = {
   uid: number;
   meal: string;
@@ -18,6 +24,8 @@ type foodProps = {
 };
 
 type MacroContext = {
+  breakfastMacros: totalMacros;
+  setBreakfastMacros: React.Dispatch<React.SetStateAction<totalMacros>>;
   breakfastFoods: foodProps[];
   setBreakfastFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
   morningSnackFoods: foodProps[];
@@ -49,6 +57,13 @@ type MacroContextProviderProps = {
 export default function MacroContextProvider({
   children,
 }: MacroContextProviderProps) {
+  // meal total macro setState Hooks
+  const [breakfastMacros, setBreakfastMacros] = useState<totalMacros>({
+    proteinTotal: 0,
+    carbsTotal: 0,
+    fatTotal: 0,
+  });
+
   // meal setState Hooks
   const [breakfastFoods, setBreakfastFoods] = useState<foodProps[]>([]);
   const [morningSnackFoods, setMorningSnackFoods] = useState<foodProps[]>([]);
@@ -69,6 +84,8 @@ export default function MacroContextProvider({
   return (
     <MacroContext.Provider
       value={{
+        breakfastMacros,
+        setBreakfastMacros,
         breakfastFoods,
         setBreakfastFoods,
         morningSnackFoods,

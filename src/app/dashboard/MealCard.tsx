@@ -39,10 +39,15 @@ type foodProps = {
 
 export default function Card({ mealType }: cardProps) {
   const [mealMacros, setMealMacros] = useState<totalMacroContent[]>([]);
+  const [proteinTotal, setProteinTotal] = useState<number>(0);
+  const [fatTotal, setFatTotal] = useState<number>(0);
+  const [carbTotal, setCarbTotal] = useState<number>(0);
 
   const mealName = mealType;
 
   const {
+    breakfastMacros,
+    setBreakfastMacros,
     breakfastFoods,
     setBreakfastFoods,
     morningSnackFoods,
@@ -66,24 +71,80 @@ export default function Card({ mealType }: cardProps) {
   } = useMacroContext();
 
   function iterateObject(obj: any) {
-    let proteinTotal: number = 0;
+    // let proteinTotal: number = 0;
+
     for (const key in obj) {
       if (typeof obj[key] === "object" && obj[key] !== null) {
         iterateObject(obj[key]);
       } else {
+        // console.log(obj[key]);
         if (key === "proteinContent") {
-          proteinTotal = proteinTotal + obj[key];
-          // console.log(proteinTotal);
-          // console.log(obj[key]);
+          setProteinTotal((proteinTotal) => proteinTotal + obj[key]);
+        }
+        if (key === "fatContent") {
+          setFatTotal((fatTotal) => fatTotal + obj[key]);
+        }
+        if (key === "carbContent") {
+          setCarbTotal((carbTotal) => carbTotal + obj[key]);
         }
       }
     }
   }
 
   useEffect(() => {
-    iterateObject(breakfastFoods);
-    console.log("render");
-  }, [breakfastFoods]);
+    if (mealType === "Breakfast") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(breakfastFoods);
+      console.log("render");
+    }
+    if (mealType === "Mid-Morning Snack") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(morningSnackFoods);
+      console.log("render");
+    }
+    if (mealType === "Lunch") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(lunchFoods);
+      console.log("render");
+    }
+    if (mealType === "Afternoon Snack") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(afternoonSnackFoods);
+      console.log("render");
+    }
+    if (mealType === "Dinner") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(dinnerFoods);
+      console.log("render");
+    }
+    if (mealType === "Dessert") {
+      setProteinTotal(0);
+      setCarbTotal(0);
+      setFatTotal(0);
+      iterateObject(dessertFoods);
+      console.log("render");
+    }
+  }, [
+    breakfastFoods,
+    morningSnackFoods,
+    lunchFoods,
+    afternoonSnackFoods,
+    dinnerFoods,
+    dessertFoods,
+    proteinTotal,
+    fatTotal,
+    carbTotal,
+  ]);
 
   const { isOpen, toggle } = useFoodItemModalModal();
   return (
@@ -92,9 +153,9 @@ export default function Card({ mealType }: cardProps) {
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="grid grid-cols-12 grid-rows-1 pt-2 pl-2">
           <div className="col-span-3 text-lg">{mealType}</div>
-          <div className="col-span-2 text-lg">Protein</div>
-          <div className="col-span-2 text-lg">Fats</div>
-          <div className="col-span-2 text-lg">Carbs</div>
+          <div className="col-span-2 text-lg">{proteinTotal}g Protein</div>
+          <div className="col-span-2 text-lg">{fatTotal}g Fat</div>
+          <div className="col-span-2 text-lg">{carbTotal}g Carbs</div>
           <div className="col-span-2"></div>
           <button
             type="submit"

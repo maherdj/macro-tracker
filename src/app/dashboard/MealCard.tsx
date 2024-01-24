@@ -1,4 +1,5 @@
 "use client";
+import { foodProps } from "./context";
 
 import React, {
   useState,
@@ -26,15 +27,6 @@ type totalMacroContent = {
   totalProtein: number;
   totalCarbs: number;
   totalFat: number;
-};
-
-type foodProps = {
-  uid: number;
-  meal: string;
-  food: string;
-  proteinContent: number;
-  fatContent: number;
-  carbContent: number;
 };
 
 export default function Card({ mealType }: cardProps) {
@@ -173,6 +165,8 @@ export default function Card({ mealType }: cardProps) {
         {breakfastFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
@@ -186,11 +180,15 @@ export default function Card({ mealType }: cardProps) {
         {morningSnackFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-            ></FoodCard>
+              uid={food.uid}
+            >
+              {food.uid}
+            </FoodCard>
           ) : (
             <div></div>
           );
@@ -199,10 +197,12 @@ export default function Card({ mealType }: cardProps) {
         {lunchFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
+              uid={food.uid}
             ></FoodCard>
           ) : (
             <div></div>
@@ -212,10 +212,12 @@ export default function Card({ mealType }: cardProps) {
         {afternoonSnackFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
+              uid={food.uid}
             ></FoodCard>
           ) : (
             <div></div>
@@ -224,10 +226,12 @@ export default function Card({ mealType }: cardProps) {
         {dinnerFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
+              uid={food.uid}
             ></FoodCard>
           ) : (
             <div></div>
@@ -237,10 +241,12 @@ export default function Card({ mealType }: cardProps) {
         {dessertFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
+              uid={food.uid}
             ></FoodCard>
           ) : (
             <div></div>

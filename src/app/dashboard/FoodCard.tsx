@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MealCard from "./MealCard";
 import { useMacroContext } from "./context";
 import { foodProps } from "./context";
+import { BiTrash } from "react-icons/bi";
 
 export default function FoodCard({
   meal,
@@ -80,10 +81,10 @@ export default function FoodCard({
           Edit
         </button>
         <button
-          className="w-auto col-span-1 justify-end"
+          className="w-auto col-span-1 justify-self-center"
           onClick={() => handleDelete(uid)}
         >
-          Delete
+          <BiTrash size="1.5em" />
         </button>
       </div>
     </>

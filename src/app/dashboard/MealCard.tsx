@@ -1,5 +1,4 @@
 "use client";
-import { foodProps } from "./context";
 
 import React, {
   useState,
@@ -69,7 +68,7 @@ export default function Card({ mealType }: cardProps) {
       if (typeof obj[key] === "object" && obj[key] !== null) {
         iterateObject(obj[key]);
       } else {
-        // console.log(obj[key]);
+        console.log(obj[key]);
         if (key === "proteinContent") {
           setProteinTotal((proteinTotal) => proteinTotal + obj[key]);
         }
@@ -89,42 +88,42 @@ export default function Card({ mealType }: cardProps) {
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(breakfastFoods);
-      console.log("render");
+      // console.log("render");
     }
     if (mealType === "Mid-Morning Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(morningSnackFoods);
-      console.log("render");
+      // console.log("render");
     }
     if (mealType === "Lunch") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(lunchFoods);
-      console.log("render");
+      // console.log("render");
     }
     if (mealType === "Afternoon Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(afternoonSnackFoods);
-      console.log("render");
+      // console.log("render");
     }
     if (mealType === "Dinner") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dinnerFoods);
-      console.log("render");
+      // console.log("render");
     }
     if (mealType === "Dessert") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dessertFoods);
-      console.log("render");
+      // console.log("render");
     }
   }, [
     breakfastFoods,
@@ -186,9 +185,7 @@ export default function Card({ mealType }: cardProps) {
               fatContent={food.fatContent}
               carbContent={food.carbContent}
               uid={food.uid}
-            >
-              {food.uid}
-            </FoodCard>
+            ></FoodCard>
           ) : (
             <div></div>
           );

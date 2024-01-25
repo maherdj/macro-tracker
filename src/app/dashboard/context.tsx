@@ -15,7 +15,7 @@ type totalMacros = {
 };
 
 export type foodProps = {
-  uid: number;
+  uid: string;
   meal: string;
   food: string;
   proteinContent: number | undefined;

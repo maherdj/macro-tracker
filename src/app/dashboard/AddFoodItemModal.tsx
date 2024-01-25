@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { useMacroContext } from "./context";
 // import { RiCloseLine } from "react-icons/ri";
+import { v4 as uuid } from "uuid";
 
 interface ModalType {
   children?: ReactNode;
@@ -16,7 +17,11 @@ type foodProps = {
   carbContent: number;
 };
 
-export default function AddFoodItemModal(props: ModalType) {
+export default function AddFoodItemModal({
+  isOpen,
+  toggle,
+  mealType,
+}: ModalType) {
   const {
     breakfastMacros,
     setBreakfastMacros,
@@ -45,16 +50,18 @@ export default function AddFoodItemModal(props: ModalType) {
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const uid = Date.now();
+    const uid = uuid();
+
+    const small_id = uid.slice(0, 8);
 
     // using if statements to add new entries into respective meal sections. This
     // is probably not the best way to do this. May fix in the future.
-    if (props.mealType === "Breakfast") {
+    if (mealType === "Breakfast") {
       setBreakfastFoods([
         ...breakfastFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -64,12 +71,12 @@ export default function AddFoodItemModal(props: ModalType) {
     }
     // console.log(breakfastFoods);
 
-    if (props.mealType === "Mid-Morning Snack") {
+    if (mealType === "Mid-Morning Snack") {
       setMorningSnackFoods([
         ...morningSnackFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -78,12 +85,12 @@ export default function AddFoodItemModal(props: ModalType) {
       ]);
     }
 
-    if (props.mealType === "Lunch") {
+    if (mealType === "Lunch") {
       setLunchFoods([
         ...lunchFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -92,12 +99,12 @@ export default function AddFoodItemModal(props: ModalType) {
       ]);
     }
 
-    if (props.mealType === "Afternoon Snack") {
+    if (mealType === "Afternoon Snack") {
       setAfternoonSnackFoods([
         ...afternoonSnackFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -106,12 +113,12 @@ export default function AddFoodItemModal(props: ModalType) {
       ]);
     }
 
-    if (props.mealType === "Dinner") {
+    if (mealType === "Dinner") {
       setDinnerFoods([
         ...dinnerFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -120,12 +127,12 @@ export default function AddFoodItemModal(props: ModalType) {
       ]);
     }
 
-    if (props.mealType === "Dessert") {
+    if (mealType === "Dessert") {
       setDessertFoods([
         ...dessertFoods,
         {
-          uid: uid,
-          meal: props.mealType,
+          uid: small_id,
+          meal: mealType,
           food: foodName,
           proteinContent: protein,
           fatContent: fat,
@@ -133,86 +140,13 @@ export default function AddFoodItemModal(props: ModalType) {
         },
       ]);
     }
-    // switch (props.mealType) {
-    //   case "Breakfast":
-    //     return setBreakfastFoods([
-    //       ...breakfastFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   case "Mid-Morning Snack":
-    //     return setMorningSnackFoods([
-    //       ...morningSnackFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   case "Lunch":
-    //     return setLunchFoods([
-    //       ...lunchFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   case "Afternoon Snack":
-    //     return setAfternoonSnackFoods([
-    //       ...afternoonSnackFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   case "Dinner":
-    //     return setDinnerFoods([
-    //       ...dinnerFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   case "Dessert":
-    //     return setDessertFoods([
-    //       ...dessertFoods,
-    //       {
-    //         uid: uid,
-    //         meal: props.mealType,
-    //         food: foodName,
-    //         proteinContent: protein,
-    //         fatContent: fat,
-    //         carbContent: carbs,
-    //       },
-    //     ]);
-    //   default:
-    //     return undefined;
 
     setFoodName("");
     setProtein(0);
     setFat(0);
     setCarbs(0);
+    isOpen = !isOpen;
+    console.log(isOpen);
   };
 
   // const handleChange = (e) => {
@@ -221,7 +155,7 @@ export default function AddFoodItemModal(props: ModalType) {
 
   return (
     <>
-      {props.isOpen && (
+      {isOpen && (
         // <div>
         //   <div>{props.children}</div>
         // </div>

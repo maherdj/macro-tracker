@@ -36,7 +36,7 @@ export default function FoodCard({
     setCarbs,
   } = useMacroContext();
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     if (meal === "Breakfast") {
       const delFood = breakfastFoods.filter((food) => food.uid !== id);
       setBreakfastFoods([...delFood]);

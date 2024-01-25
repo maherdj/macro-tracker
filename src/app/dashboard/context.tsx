@@ -14,8 +14,8 @@ type totalMacros = {
   fatTotal: number;
 };
 
-type foodProps = {
-  uid: number;
+export type foodProps = {
+  uid: string;
   meal: string;
   food: string;
   proteinContent: number | undefined;

@@ -43,27 +43,27 @@ export default function FoodCard({
     }
 
     if (meal === "Mid-Morning Snack") {
-      const delFood = breakfastFoods.filter((food) => food.uid !== id);
+      const delFood = morningSnackFoods.filter((food) => food.uid !== id);
       setMorningSnackFoods([...delFood]);
     }
 
     if (meal === "Lunch") {
-      const delFood = breakfastFoods.filter((food) => food.uid !== id);
+      const delFood = lunchFoods.filter((food) => food.uid !== id);
       setLunchFoods([...delFood]);
     }
 
     if (meal === "Afternoon Snack") {
-      const delFood = breakfastFoods.filter((food) => food.uid !== id);
+      const delFood = afternoonSnackFoods.filter((food) => food.uid !== id);
       setAfternoonSnackFoods([...delFood]);
     }
 
     if (meal === "Dinner") {
-      const delFood = breakfastFoods.filter((food) => food.uid !== id);
+      const delFood = dinnerFoods.filter((food) => food.uid !== id);
       setDinnerFoods([...delFood]);
     }
 
     if (meal === "Dessert") {
-      const delFood = breakfastFoods.filter((food) => food.uid !== id);
+      const delFood = dessertFoods.filter((food) => food.uid !== id);
       setDessertFoods([...delFood]);
     }
   };

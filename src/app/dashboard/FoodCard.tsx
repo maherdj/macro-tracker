@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import MealCard from "./MealCard";
 import { useMacroContext } from "./context";
 import { foodProps } from "./context";
-import { BiTrash } from "react-icons/bi";
+import { BiTrash, BiEdit } from "react-icons/bi";
+import EditFoodItemModal from "./EditFoodItemModal";
+import useFoodItemModalModal from "./useFoodItemModal";
 
 export default function FoodCard({
   meal,
@@ -37,6 +39,14 @@ export default function FoodCard({
     setCarbs,
   } = useMacroContext();
 
+  const { isOpen, toggle } = useFoodItemModalModal();
+
+  const [edit, setEdit] = useState<boolean>(false);
+
+  const handleEdit = () => {
+    setEdit(!edit);
+  };
+
   const handleDelete = (id: string) => {
     if (meal === "Breakfast") {
       const delFood = breakfastFoods.filter((food) => food.uid !== id);
@@ -69,6 +79,18 @@ export default function FoodCard({
     }
   };
 
+  if (edit) {
+    return (
+      <EditFoodItemModal
+        meal={meal}
+        uid={uid}
+        proteinContent={proteinContent}
+        food={food}
+        fatContent={fatContent}
+        carbContent={carbContent}
+      ></EditFoodItemModal>
+    );
+  }
   return (
     <>
       <div className="border-t-2 mb-2 mt-2 ml-5 mr-5"></div>
@@ -77,8 +99,11 @@ export default function FoodCard({
         <div className="w-auto col-span-1">Protein: {proteinContent}g</div>
         <div className="w-auto col-span-1">Fat: {fatContent}g</div>
         <div className="w-auto col-span-1">Carbs: {carbContent}g</div>
-        <button className="w-auto col-span-1 text-right justify-end">
-          Edit
+        <button
+          className="w-auto col-span-1 text-right justify-self-end"
+          onClick={handleEdit}
+        >
+          <BiEdit size="1.5em" />
         </button>
         <button
           className="w-auto col-span-1 justify-self-center"

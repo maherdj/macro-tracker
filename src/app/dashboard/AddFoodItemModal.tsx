@@ -173,7 +173,6 @@ export default function AddFoodItemModal({
           <form
             className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
             onSubmit={handleAdd}
-            onClick={close()}
           >
             {/* <div className="w-auto col-span-1"></div> */}
             <input

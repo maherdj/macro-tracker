@@ -145,7 +145,6 @@ export default function AddFoodItemModal({
     setProtein(0);
     setFat(0);
     setCarbs(0);
-    isOpen = !isOpen;
     console.log(isOpen);
   };
 

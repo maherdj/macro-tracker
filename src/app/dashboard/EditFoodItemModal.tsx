@@ -1,11 +1,15 @@
-import React, { ReactNode, useState } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { useMacroContext } from "./context";
 // import { RiCloseLine } from "react-icons/ri";
 import { v4 as uuid } from "uuid";
 import { foodProps } from "./context";
+import useFoodItemModalModal from "./useFoodItemModal";
+import { ReactFormState } from "react-dom/client";
 
 export default function EditFoodItemModal({
-  meal,
+  // meal,
   uid,
   food,
   fatContent,
@@ -27,37 +31,41 @@ export default function EditFoodItemModal({
     setDinnerFoods,
     dessertFoods,
     setDessertFoods,
-    foodName,
-    setFoodName,
-    protein,
-    setProtein,
-    fat,
-    setFat,
-    carbs,
-    setCarbs,
   } = useMacroContext();
 
+  const { edit, toggleEdit } = useFoodItemModalModal();
+
+  const [editFoodName, setEditFoodName] = useState<string>(food);
+  const [editProtein, setEditProtein] = useState<number | undefined>(
+    proteinContent
+  );
+  const [editCarbs, setEditCarbs] = useState<number | undefined>(carbContent);
+  const [editFat, setEditFat] = useState<number | undefined>(fatContent);
+
+  const handleClick = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   const handleEdit = (id: string) => {
+    // e.preventDefault();
     // const uid = uuid();
-
+    // console.log(id);
     // const small_id = uid.slice(0, 8);
-
     // using if statements to add new entries into respective meal sections. This
     // is probably not the best way to do this. May fix in the future.
-    if (meal === "Breakfast") {
-      const breakfastFoodsCopy = [...breakfastFoods];
-      //   for (const food in breakfastFoodsCopy) {
-      //     console.log(food);
-      //   }
-      console.log(breakfastFoods);
-    }
+    // if (meal === "Breakfast") {
+    //   const breakfastFoodsCopy = [...breakfastFoods];
+    //   for (const food in breakfastFoodsCopy) {
+    //     console.log(food);
+    //   }
+    // }
     // console.log(breakfastFoods);
-
-    // if (mealType === "Mid-Morning Snack") {
+    // console.log(breakfastFoods);
+    // if (meal === "Mid-Morning Snack") {
     //   setMorningSnackFoods([
     //     ...morningSnackFoods,
     //     {
-    //       uid: small_id,
+    //       uid: id,
     //       meal: meal,
     //       food: foodName,
     //       proteinContent: protein,
@@ -66,12 +74,11 @@ export default function EditFoodItemModal({
     //     },
     //   ]);
     // }
-
-    // if (mealType === "Lunch") {
+    // if (meal === "Lunch") {
     //   setLunchFoods([
     //     ...lunchFoods,
     //     {
-    //       uid: small_id,
+    //       uid: id,
     //       meal: meal,
     //       food: foodName,
     //       proteinContent: protein,
@@ -80,12 +87,11 @@ export default function EditFoodItemModal({
     //     },
     //   ]);
     // }
-
-    // if (mealType === "Afternoon Snack") {
+    // if (meal === "Afternoon Snack") {
     //   setAfternoonSnackFoods([
     //     ...afternoonSnackFoods,
     //     {
-    //       uid: small_id,
+    //       uid: id,
     //       meal: meal,
     //       food: foodName,
     //       proteinContent: protein,
@@ -94,13 +100,12 @@ export default function EditFoodItemModal({
     //     },
     //   ]);
     // }
-
-    // if (mealType === "Dinner") {
+    // if (meal === "Dinner") {
     //   setDinnerFoods([
     //     ...dinnerFoods,
     //     {
-    //       uid: small_id,
-    //       meal: mealType,
+    //       uid: id,
+    //       meal: meal,
     //       food: foodName,
     //       proteinContent: protein,
     //       fatContent: fat,
@@ -108,13 +113,12 @@ export default function EditFoodItemModal({
     //     },
     //   ]);
     // }
-
-    // if (mealType === "Dessert") {
+    // if (meal === "Dessert") {
     //   setDessertFoods([
     //     ...dessertFoods,
     //     {
-    //       uid: small_id,
-    //       meal: mealType,
+    //       uid: id,
+    //       meal: meal,
     //       food: foodName,
     //       proteinContent: protein,
     //       fatContent: fat,
@@ -122,7 +126,6 @@ export default function EditFoodItemModal({
     //     },
     //   ]);
     // }
-
     // setFoodName("");
     // setProtein(0);
     // setFat(0);
@@ -136,16 +139,6 @@ export default function EditFoodItemModal({
   return (
     <>
       <div className="w-full col-span-12 h-auto bg-white">
-        {/* <div className="flow-root">
-            {/* //       <button
-            onClick={() => {
-              close();
-            }}
-            className="mr-2 p-2 mt-2 rounded-lg border-2 float-right justify-end"
-          >
-            X
-          </button> */}
-
         <form
           className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
           onSubmit={() => handleEdit(uid)}
@@ -155,16 +148,16 @@ export default function EditFoodItemModal({
             className="col-span-1 border-2"
             type="text"
             placeholder="Food Name"
-            value={foodName}
-            onChange={(e) => setFoodName(e.target.value)}
+            value={editFoodName}
+            onChange={(e) => setEditFoodName(e.target.value)}
           ></input>
 
           <div className="col-span-1 justify-self-end pr-1">Protein</div>
           <input
             className="col-span-1 border-2"
             type="number"
-            value={protein}
-            onChange={(e) => setProtein(e.target.valueAsNumber)}
+            value={editProtein}
+            onChange={(e) => setEditProtein(e.target.valueAsNumber)}
             placeholder="in grams"
           ></input>
 
@@ -172,8 +165,8 @@ export default function EditFoodItemModal({
           <input
             className="col-span-1 border-2"
             type="number"
-            onChange={(e) => setFat(e.target.valueAsNumber)}
-            value={fat}
+            onChange={(e) => setEditFat(e.target.valueAsNumber)}
+            value={editFat}
             placeholder="in grams"
           ></input>
 
@@ -181,23 +174,20 @@ export default function EditFoodItemModal({
           <input
             className="col-span-1 border-2"
             type="number"
-            value={carbs}
-            onChange={(e) => setCarbs(e.target.valueAsNumber)}
+            value={editCarbs}
+            onChange={(e) => setEditCarbs(e.target.valueAsNumber)}
             placeholder="in grams"
           ></input>
 
           <button
             className="w-auto col-span-1 border-2 rounded-lg mx-2"
-            // type="sutton"
             value="submit"
+            onClick={handleClick}
           >
             Submit
           </button>
-          {/* <div>{error}</div> */}
         </form>
       </div>
     </>
-    //   <div onClick={() => setIsOpen(false)} />
-    //
   );
 }

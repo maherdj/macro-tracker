@@ -39,13 +39,11 @@ export default function FoodCard({
     setCarbs,
   } = useMacroContext();
 
-  const { isOpen, toggle } = useFoodItemModalModal();
+  const { edit, toggleEdit } = useFoodItemModalModal();
 
-  const [edit, setEdit] = useState<boolean>(false);
+  // const [editFood, setEditFood] = useState<foodProps[]>({
 
-  const handleEdit = () => {
-    setEdit(!edit);
-  };
+  // })
 
   const handleDelete = (id: string) => {
     if (meal === "Breakfast") {
@@ -101,7 +99,7 @@ export default function FoodCard({
         <div className="w-auto col-span-1">Carbs: {carbContent}g</div>
         <button
           className="w-auto col-span-1 text-right justify-self-end"
-          onClick={handleEdit}
+          onClick={toggleEdit}
         >
           <BiEdit size="1.5em" />
         </button>

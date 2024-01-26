@@ -110,6 +110,7 @@ export default function Card({ mealType }: cardProps) {
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dinnerFoods);
+      // console.log("render");
     }
     if (mealType === "Dessert") {
       setProteinTotal(0);

@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { useMacroContext } from "./context";
+import { BiCheckSquare } from "react-icons/bi";
 // import { RiCloseLine } from "react-icons/ri";
 import { v4 as uuid } from "uuid";
 
@@ -192,10 +193,10 @@ export default function AddFoodItemModal({
             ></input>
 
             <button
-              className="w-auto col-span-1 border-2 rounded-lg mx-2"
+              className="w-auto col-span-1 justify-self-center mx-2"
               value="submit"
             >
-              Submit
+              <BiCheckSquare size="1.5rem" />
             </button>
           </form>
         </div>

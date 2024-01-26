@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import MealCard from "./MealCard";
 import { useMacroContext } from "./context";
 import { foodProps } from "./context";
-import { BiTrash, BiEdit } from "react-icons/bi";
-import EditFoodItemModal from "./EditFoodItemModal";
+import { BiTrash, BiEdit, BiCheckSquare } from "react-icons/bi";
 import useFoodItemModalModal from "./useFoodItemModal";
 
 // function useForceUpdate() {
@@ -157,10 +156,10 @@ export default function FoodCard({
             ></input>
 
             <button
-              className="w-auto col-span-1 border-2 rounded-lg mx-2"
+              className="w-auto col-span-1 justify-self-center mx-2"
               value="submit"
             >
-              Submit
+              <BiCheckSquare size="1.5em" />
             </button>
           </form>
         </div>

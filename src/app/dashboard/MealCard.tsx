@@ -68,7 +68,6 @@ export default function Card({ mealType }: cardProps) {
       if (typeof obj[key] === "object" && obj[key] !== null) {
         iterateObject(obj[key]);
       } else {
-        console.log(obj[key]);
         if (key === "proteinContent") {
           setProteinTotal((proteinTotal) => proteinTotal + obj[key]);
         }
@@ -88,28 +87,23 @@ export default function Card({ mealType }: cardProps) {
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(breakfastFoods);
-      // console.log("render");
     }
     if (mealType === "Mid-Morning Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(morningSnackFoods);
-      // console.log("render");
     }
     if (mealType === "Lunch") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
-      iterateObject(lunchFoods);
-      // console.log("render");
     }
     if (mealType === "Afternoon Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(afternoonSnackFoods);
-      // console.log("render");
     }
     if (mealType === "Dinner") {
       setProteinTotal(0);
@@ -123,7 +117,6 @@ export default function Card({ mealType }: cardProps) {
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dessertFoods);
-      // console.log("render");
     }
   }, [
     breakfastFoods,

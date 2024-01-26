@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { useMacroContext } from "./context";
+import { BiCheckSquare } from "react-icons/bi";
 // import { RiCloseLine } from "react-icons/ri";
 import { v4 as uuid } from "uuid";
 
@@ -145,37 +146,17 @@ export default function AddFoodItemModal({
     setProtein(0);
     setFat(0);
     setCarbs(0);
-    isOpen = !isOpen;
-    console.log(isOpen);
+    toggle();
   };
-
-  // const handleChange = (e) => {
-
-  // }
 
   return (
     <>
       {isOpen && (
-        // <div>
-        //   <div>{props.children}</div>
-        // </div>
         <div className="w-full col-span-12 h-auto bg-white">
-          {/* <div className="flow-root">
-            {/* //       <button
-            onClick={() => {
-              close();
-            }}
-            className="mr-2 p-2 mt-2 rounded-lg border-2 float-right justify-end"
-          >
-            X
-          </button> */}
-
           <form
             className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
             onSubmit={handleAdd}
-            onClick={close()}
           >
-            {/* <div className="w-auto col-span-1"></div> */}
             <input
               className="col-span-1 border-2"
               type="text"
@@ -212,18 +193,14 @@ export default function AddFoodItemModal({
             ></input>
 
             <button
-              className="w-auto col-span-1 border-2 rounded-lg mx-2"
-              // type="sutton"
+              className="w-auto col-span-1 justify-self-center mx-2"
               value="submit"
             >
-              Submit
+              <BiCheckSquare size="1.5rem" />
             </button>
-            {/* <div>{error}</div> */}
           </form>
         </div>
       )}
     </>
-    //   <div onClick={() => setIsOpen(false)} />
-    //
   );
 }

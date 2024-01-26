@@ -12,6 +12,7 @@ function useFoodItemModalModal() {
 
   const toggleEdit = () => {
     setEdit(!edit);
+    console.log("edit set to: " + edit);
   };
   return {
     isOpen,

@@ -115,47 +115,54 @@ export default function FoodCard({
   return (
     <>
       {edit ? (
-        <div className="w-full col-span-12 h-auto bg-white">
+        <div className="w-full col-span-12 h-auto bg-white border-t-2">
           <form
-            className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
+            className="grid grid-cols-12 grid-rows-1 pl-2 gap-y-2 pt-3 pb-3"
             onSubmit={(e) => handleEdit(uid, e)}
           >
             {/* <div className="w-auto col-span-1"></div> */}
             <input
-              className="col-span-1 border-2"
+              className="col-span-2 border-2 mr-12 rounded-lg"
               type="text"
               placeholder="Food Name"
               value={editFoodName}
               onChange={(e) => setEditFoodName(e.target.value)}
             ></input>
 
-            <div className="col-span-1 justify-self-end pr-1">Protein</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={editProtein}
-              onChange={(e) => setEditProtein(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
+            <div className="col-span-2 pr-1">
+              Protein:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={protein}
+                onChange={(e) => setEditProtein(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
+            <div className="w-auto col-span-2 pr-1">
+              Fat:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                onChange={(e) => setEditFat(e.target.valueAsNumber)}
+                value={fat}
+                placeholder="in grams"
+              ></input>
+            </div>
+            <div className="w-auto col-span-2 pr-1">
+              Carbs:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={carbs}
+                onChange={(e) => setCarbs(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
 
-            <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              onChange={(e) => setEditFat(e.target.valueAsNumber)}
-              value={editFat}
-              placeholder="in grams"
-            ></input>
-
-            <div className="w-auto col-span-1 justify-self-end pr-1">Carbs</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={editCarbs}
-              onChange={(e) => setEditCarbs(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
-
+            <div className="col-span-3 pr-1 justify-self-start">
+              Calories: {calories}
+            </div>
             <button
               className="w-auto col-span-1 justify-self-center mx-2"
               value="submit"

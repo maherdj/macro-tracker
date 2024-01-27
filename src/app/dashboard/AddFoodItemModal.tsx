@@ -46,7 +46,14 @@ export default function AddFoodItemModal({
     setFat,
     carbs,
     setCarbs,
+    calories,
+    setCalories,
   } = useMacroContext();
+
+  function calculateCalores() {
+    const totalCalories: number | undefined = carbs * 4 + protein * 4 + fat * 9;
+    setCalories(totalCalories);
+  }
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +74,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -82,6 +90,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -96,6 +105,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -110,6 +120,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -124,6 +135,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -138,6 +150,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }

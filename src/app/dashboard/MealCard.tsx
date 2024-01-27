@@ -12,7 +12,7 @@ import FoodCard from "./FoodCard";
 import AddFoodItemModal from "./AddFoodItemModal";
 import useFoodItemModalModal from "./useFoodItemModal";
 import { useMacroContext } from "./context";
-import error from "next/error";
+import { BiPlus } from "react-icons/bi";
 
 type Popup = {
   close: () => void;
@@ -33,6 +33,7 @@ export default function Card({ mealType }: cardProps) {
   const [proteinTotal, setProteinTotal] = useState<number>(0);
   const [fatTotal, setFatTotal] = useState<number>(0);
   const [carbTotal, setCarbTotal] = useState<number>(0);
+  const [calorieTotal, setCalorieTotal] = useState<number>(0);
 
   const mealName = mealType;
 
@@ -81,42 +82,53 @@ export default function Card({ mealType }: cardProps) {
     }
   }
 
+  function calculateCalories() {
+    const totalCalories = carbTotal * 4 + proteinTotal * 4 + fatTotal * 9;
+    setCalorieTotal(totalCalories);
+  }
+
   useEffect(() => {
     if (mealType === "Breakfast") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(breakfastFoods);
+      calculateCalories();
     }
     if (mealType === "Mid-Morning Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(morningSnackFoods);
+      calculateCalories();
     }
     if (mealType === "Lunch") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
+      iterateObject(lunchFoods);
+      calculateCalories();
     }
     if (mealType === "Afternoon Snack") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(afternoonSnackFoods);
+      calculateCalories();
     }
     if (mealType === "Dinner") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dinnerFoods);
-      // console.log("render");
+      calculateCalories();
     }
     if (mealType === "Dessert") {
       setProteinTotal(0);
       setCarbTotal(0);
       setFatTotal(0);
       iterateObject(dessertFoods);
+      calculateCalories();
     }
   }, [
     breakfastFoods,
@@ -136,18 +148,18 @@ export default function Card({ mealType }: cardProps) {
       <div className="border-t-2 mb-2 mt-2"></div>
       <div className="w-11/12 mx-10 rounded-lg border-2">
         <div className="grid grid-cols-12 grid-rows-1 pt-2 pl-2">
-          <div className="col-span-3 text-lg">{mealType}</div>
-          <div className="col-span-2 text-lg">{proteinTotal}g Protein</div>
-          <div className="col-span-2 text-lg">{fatTotal}g Fat</div>
-          <div className="col-span-2 text-lg">{carbTotal}g Carbs</div>
-          <div className="col-span-2"></div>
+          <div className="col-span-2 text-lg">{mealType}</div>
+          <div className="col-span-2 text-base">Protein: {proteinTotal}g</div>
+          <div className="col-span-2 text-base">Fat: {fatTotal}g</div>
+          <div className="col-span-2 text-base">Carbs: {carbTotal}g</div>
+          <div className="col-span-3 text-base">Calories: {calorieTotal}</div>
           <button
             type="submit"
             value="+"
-            className="w-10 rounded-lg float-r mr-6 mb-2 border-2 text-lg"
+            className="w-6 col-span-1 mb-2 text-base justify-self-center"
             onClick={toggle}
           >
-            +
+            <BiPlus size="1.5em" />
           </button>
         </div>
         {/* after trying to use a switch statement to conditionally render
@@ -163,6 +175,7 @@ export default function Card({ mealType }: cardProps) {
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>
@@ -172,12 +185,13 @@ export default function Card({ mealType }: cardProps) {
         {morningSnackFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
               meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-              uid={food.uid}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>
@@ -187,12 +201,13 @@ export default function Card({ mealType }: cardProps) {
         {lunchFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
               meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-              uid={food.uid}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>
@@ -202,12 +217,13 @@ export default function Card({ mealType }: cardProps) {
         {afternoonSnackFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
               meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-              uid={food.uid}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>
@@ -216,12 +232,13 @@ export default function Card({ mealType }: cardProps) {
         {dinnerFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
               meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-              uid={food.uid}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>
@@ -231,12 +248,13 @@ export default function Card({ mealType }: cardProps) {
         {dessertFoods.map((food) => {
           return food.meal === mealName ? (
             <FoodCard
+              uid={food.uid}
               meal={food.meal}
               food={food.food}
               proteinContent={food.proteinContent}
               fatContent={food.fatContent}
               carbContent={food.carbContent}
-              uid={food.uid}
+              calories={food.calories}
             ></FoodCard>
           ) : (
             <div></div>

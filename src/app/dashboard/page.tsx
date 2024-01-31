@@ -5,6 +5,7 @@ import FoodCard from "./FoodCard";
 
 import { useState } from "react";
 import MacroContextProvider from "./context";
+import DailyOverview from "./DailyOverview";
 
 type foodProps = {
   uid: number;
@@ -19,7 +20,9 @@ export default function Home() {
   return (
     <>
       <MacroContextProvider>
-        <div className="h-96">Header</div>
+        <div>
+          <DailyOverview />
+        </div>
         <MealCard mealType="Breakfast" />
         <MealCard mealType="Mid-Morning Snack" />
         <MealCard mealType="Lunch" />

@@ -17,6 +17,7 @@ export default function FoodCard({
   fatContent,
   carbContent,
   uid,
+  calories,
 }: foodProps) {
   const {
     breakfastMacros,
@@ -46,15 +47,20 @@ export default function FoodCard({
   const { edit, toggleEdit } = useFoodItemModalModal();
 
   const [editFoodName, setEditFoodName] = useState<string>(food);
-  const [editProtein, setEditProtein] = useState<number | undefined>(
-    proteinContent
-  );
-  const [editCarbs, setEditCarbs] = useState<number | undefined>(carbContent);
-  const [editFat, setEditFat] = useState<number | undefined>(fatContent);
+  const [editProtein, setEditProtein] = useState<number>(proteinContent);
+  const [editCarbs, setEditCarbs] = useState<number>(carbContent);
+  const [editFat, setEditFat] = useState<number>(fatContent);
+  const [editCalories, setEditCalories] = useState<number>(calories);
 
-  // useEffect(() => {
-  //   useForceUpdate();
-  // }, [edit]);
+  function calculateCalories() {
+    const totalCalories: number | undefined =
+      editCarbs * 4 + editProtein * 4 + editFat * 9;
+    setEditCalories(totalCalories);
+  }
+
+  useEffect(() => {
+    calculateCalories();
+  }, [editCarbs, editFat, editProtein]);
 
   const handleDelete = (id: string) => {
     if (meal === "Breakfast") {
@@ -104,6 +110,7 @@ export default function FoodCard({
           breakfastFoodsCopy[food].proteinContent = editProtein;
           breakfastFoodsCopy[food].fatContent = editFat;
           breakfastFoodsCopy[food].carbContent = editCarbs;
+          breakfastFoodsCopy[food].calories = editCalories;
         }
       }
       setBreakfastFoods(breakfastFoodsCopy);
@@ -114,47 +121,54 @@ export default function FoodCard({
   return (
     <>
       {edit ? (
-        <div className="w-full col-span-12 h-auto bg-white">
+        <div className="w-full col-span-12 h-auto bg-white border-t-2">
           <form
-            className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
+            className="grid grid-cols-12 grid-rows-1 pl-2 gap-y-2 pt-3 pb-3"
             onSubmit={(e) => handleEdit(uid, e)}
           >
             {/* <div className="w-auto col-span-1"></div> */}
             <input
-              className="col-span-1 border-2"
+              className="col-span-2 border-2 mr-12 rounded-lg"
               type="text"
               placeholder="Food Name"
               value={editFoodName}
               onChange={(e) => setEditFoodName(e.target.value)}
             ></input>
 
-            <div className="col-span-1 justify-self-end pr-1">Protein</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={editProtein}
-              onChange={(e) => setEditProtein(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
+            <div className="col-span-2 pr-1">
+              Protein:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={editProtein}
+                onChange={(e) => setEditProtein(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
+            <div className="w-auto col-span-2 pr-1">
+              Fat:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                onChange={(e) => setEditFat(e.target.valueAsNumber)}
+                value={editFat}
+                placeholder="in grams"
+              ></input>
+            </div>
+            <div className="w-auto col-span-2 pr-1">
+              Carbs:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={editCarbs}
+                onChange={(e) => setEditCarbs(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
 
-            <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              onChange={(e) => setEditFat(e.target.valueAsNumber)}
-              value={editFat}
-              placeholder="in grams"
-            ></input>
-
-            <div className="w-auto col-span-1 justify-self-end pr-1">Carbs</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={editCarbs}
-              onChange={(e) => setEditCarbs(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
-
+            <div className="col-span-3 pr-1 justify-self-start">
+              Calories: {editCalories}
+            </div>
             <button
               className="w-auto col-span-1 justify-self-center mx-2"
               value="submit"
@@ -166,11 +180,12 @@ export default function FoodCard({
       ) : (
         <>
           <div className="border-t-2 mb-2 mt-2 ml-5 mr-5"></div>
-          <div className="grid grid-cols-6 pt-2 pl-2 pb-2">
-            <div className="w-auto col-span-1">{food}</div>
-            <div className="w-auto col-span-1">Protein: {proteinContent}g</div>
-            <div className="w-auto col-span-1">Fat: {fatContent}g</div>
-            <div className="w-auto col-span-1">Carbs: {carbContent}g</div>
+          <div className="grid grid-cols-12 pt-2 pl-2 pb-2">
+            <div className="w-auto col-span-2">{food}</div>
+            <div className="w-auto col-span-2">Protein: {proteinContent}g</div>
+            <div className="w-auto col-span-2">Fat: {fatContent}g</div>
+            <div className="w-auto col-span-2">Carbs: {carbContent}g</div>
+            <div className="w-auto col-span-2">Calories: {calories}</div>
             <button
               className="w-auto col-span-1 text-right justify-self-end"
               onClick={toggleEdit}

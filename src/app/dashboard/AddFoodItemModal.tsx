@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useMacroContext } from "./context";
 import { BiCheckSquare } from "react-icons/bi";
 // import { RiCloseLine } from "react-icons/ri";
@@ -46,7 +46,18 @@ export default function AddFoodItemModal({
     setFat,
     carbs,
     setCarbs,
+    calories,
+    setCalories,
   } = useMacroContext();
+
+  function calculateCalories() {
+    const totalCalories: number | undefined = carbs * 4 + protein * 4 + fat * 9;
+    setCalories(totalCalories);
+  }
+
+  useEffect(() => {
+    calculateCalories();
+  }, [carbs, fat, protein]);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +78,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -82,6 +94,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -96,6 +109,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -110,6 +124,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -124,6 +139,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -138,6 +154,7 @@ export default function AddFoodItemModal({
           proteinContent: protein,
           fatContent: fat,
           carbContent: carbs,
+          calories: calories,
         },
       ]);
     }
@@ -152,48 +169,58 @@ export default function AddFoodItemModal({
   return (
     <>
       {isOpen && (
-        <div className="w-full col-span-12 h-auto bg-white">
+        <div className="w-full col-span-12 h-auto bg-white border-t-2">
           <form
-            className="grid grid-cols-8 grid-rows-1 p-5 gap-y-2"
+            className="grid grid-cols-12 grid-rows-1 pl-2 gap-y-2 pt-3 pb-3"
             onSubmit={handleAdd}
           >
             <input
-              className="col-span-1 border-2"
+              className="col-span-2 border-2 mr-12 rounded-lg"
               type="text"
               placeholder="Food Name"
               value={foodName}
               onChange={(e) => setFoodName(e.target.value)}
             ></input>
 
-            <div className="col-span-1 justify-self-end pr-1">Protein</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={protein}
-              onChange={(e) => setProtein(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
+            <div className="col-span-2 pr-1">
+              Protein:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={protein}
+                onChange={(e) => setProtein(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
 
-            <div className="w-auto col-span-1 justify-self-end pr-1">Fat</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              onChange={(e) => setFat(e.target.valueAsNumber)}
-              value={fat}
-              placeholder="in grams"
-            ></input>
+            <div className="col-span-2 pr-1">
+              Fat:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                onChange={(e) => setFat(e.target.valueAsNumber)}
+                value={fat}
+                placeholder="in grams"
+              ></input>
+            </div>
 
-            <div className="w-auto col-span-1 justify-self-end pr-1">Carbs</div>
-            <input
-              className="col-span-1 border-2"
-              type="number"
-              value={carbs}
-              onChange={(e) => setCarbs(e.target.valueAsNumber)}
-              placeholder="in grams"
-            ></input>
+            <div className="col-span-2 pr-1">
+              Carbs:
+              <input
+                className="w-12 border-2 ml-1 rounded-lg"
+                type="number"
+                value={carbs}
+                onChange={(e) => setCarbs(e.target.valueAsNumber)}
+                placeholder="in grams"
+              ></input>
+            </div>
+
+            <div className="col-span-3 pr-1 justify-self-start">
+              Calories: {calories}
+            </div>
 
             <button
-              className="w-auto col-span-1 justify-self-center mx-2"
+              className="w-auto col-span-1 mx-2 justify-self-center"
               value="submit"
             >
               <BiCheckSquare size="1.5rem" />

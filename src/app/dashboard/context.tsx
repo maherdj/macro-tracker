@@ -18,9 +18,10 @@ export type foodProps = {
   uid: string;
   meal: string;
   food: string;
-  proteinContent: number | undefined;
-  fatContent: number | undefined;
-  carbContent: number | undefined;
+  proteinContent: number;
+  fatContent: number;
+  carbContent: number;
+  calories: number;
 };
 
 type MacroContext = {
@@ -40,12 +41,14 @@ type MacroContext = {
   setDessertFoods: React.Dispatch<React.SetStateAction<foodProps[]>>;
   foodName: string;
   setFoodName: React.Dispatch<React.SetStateAction<string>>;
-  protein: number | undefined;
-  setProtein: React.Dispatch<React.SetStateAction<number | undefined>>;
-  fat: number | undefined;
-  setFat: React.Dispatch<React.SetStateAction<number | undefined>>;
-  carbs: number | undefined;
-  setCarbs: React.Dispatch<React.SetStateAction<number | undefined>>;
+  protein: number;
+  setProtein: React.Dispatch<React.SetStateAction<number>>;
+  fat: number;
+  setFat: React.Dispatch<React.SetStateAction<number>>;
+  carbs: number;
+  setCarbs: React.Dispatch<React.SetStateAction<number>>;
+  calories: number;
+  setCalories: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const MacroContext = createContext<MacroContext | null>(null);
@@ -76,10 +79,11 @@ export default function MacroContextProvider({
 
   // meal content setState Hooks
   const [foodName, setFoodName] = useState<string>("");
-  const [protein, setProtein] = useState<number | undefined>(0);
+  const [protein, setProtein] = useState<number>(0);
 
-  const [fat, setFat] = useState<number | undefined>(0);
-  const [carbs, setCarbs] = useState<number | undefined>(0);
+  const [fat, setFat] = useState<number>(0);
+  const [carbs, setCarbs] = useState<number>(0);
+  const [calories, setCalories] = useState<number>(0);
 
   return (
     <MacroContext.Provider
@@ -106,6 +110,8 @@ export default function MacroContextProvider({
         setFat,
         carbs,
         setCarbs,
+        calories,
+        setCalories,
       }}
     >
       {children}

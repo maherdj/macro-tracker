@@ -47,15 +47,20 @@ export default function FoodCard({
   const { edit, toggleEdit } = useFoodItemModalModal();
 
   const [editFoodName, setEditFoodName] = useState<string>(food);
-  const [editProtein, setEditProtein] = useState<number | undefined>(
-    proteinContent
-  );
-  const [editCarbs, setEditCarbs] = useState<number | undefined>(carbContent);
-  const [editFat, setEditFat] = useState<number | undefined>(fatContent);
+  const [editProtein, setEditProtein] = useState<number>(proteinContent);
+  const [editCarbs, setEditCarbs] = useState<number>(carbContent);
+  const [editFat, setEditFat] = useState<number>(fatContent);
+  const [editCalories, setEditCalories] = useState<number>(calories);
 
-  // useEffect(() => {
-  //   useForceUpdate();
-  // }, [edit]);
+  function calculateCalories() {
+    const totalCalories: number | undefined =
+      editCarbs * 4 + editProtein * 4 + editFat * 9;
+    setEditCalories(totalCalories);
+  }
+
+  useEffect(() => {
+    calculateCalories();
+  }, [editCarbs, editFat, editProtein]);
 
   const handleDelete = (id: string) => {
     if (meal === "Breakfast") {
@@ -105,6 +110,7 @@ export default function FoodCard({
           breakfastFoodsCopy[food].proteinContent = editProtein;
           breakfastFoodsCopy[food].fatContent = editFat;
           breakfastFoodsCopy[food].carbContent = editCarbs;
+          breakfastFoodsCopy[food].calories = editCalories;
         }
       }
       setBreakfastFoods(breakfastFoodsCopy);
@@ -134,7 +140,7 @@ export default function FoodCard({
               <input
                 className="w-12 border-2 ml-1 rounded-lg"
                 type="number"
-                value={protein}
+                value={editProtein}
                 onChange={(e) => setEditProtein(e.target.valueAsNumber)}
                 placeholder="in grams"
               ></input>
@@ -145,7 +151,7 @@ export default function FoodCard({
                 className="w-12 border-2 ml-1 rounded-lg"
                 type="number"
                 onChange={(e) => setEditFat(e.target.valueAsNumber)}
-                value={fat}
+                value={editFat}
                 placeholder="in grams"
               ></input>
             </div>
@@ -154,14 +160,14 @@ export default function FoodCard({
               <input
                 className="w-12 border-2 ml-1 rounded-lg"
                 type="number"
-                value={carbs}
-                onChange={(e) => setCarbs(e.target.valueAsNumber)}
+                value={editCarbs}
+                onChange={(e) => setEditCarbs(e.target.valueAsNumber)}
                 placeholder="in grams"
               ></input>
             </div>
 
             <div className="col-span-3 pr-1 justify-self-start">
-              Calories: {calories}
+              Calories: {editCalories}
             </div>
             <button
               className="w-auto col-span-1 justify-self-center mx-2"

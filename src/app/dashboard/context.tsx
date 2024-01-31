@@ -18,10 +18,10 @@ export type foodProps = {
   uid: string;
   meal: string;
   food: string;
-  proteinContent: number | undefined;
-  fatContent: number | undefined;
-  carbContent: number | undefined;
-  calories: number | undefined;
+  proteinContent: number;
+  fatContent: number;
+  carbContent: number;
+  calories: number;
 };
 
 type MacroContext = {

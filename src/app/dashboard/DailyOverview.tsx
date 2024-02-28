@@ -96,6 +96,7 @@ export default function DailyOverview() {
     setDailyCarbs(carbs);
     setDailyFat(fats);
     setDailyCalories(cals);
+    console.log(protein);
   }, [
     breakfastFoods,
     morningSnackFoods,
@@ -109,7 +110,11 @@ export default function DailyOverview() {
       <PieChart
         series={[
           {
-            data,
+            data: [
+              { value: dailyProtein, color: "blue", label: "Protein" },
+              { value: dailyCarbs, color: "purple", label: "Carbs" },
+              { value: dailyFat, color: "orange", label: "Fats" },
+            ],
             innerRadius: 30,
             outerRadius: 100,
             paddingAngle: 5,

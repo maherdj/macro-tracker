@@ -1,11 +1,11 @@
 // import { useState } from "react";
 import Image from "next/image";
-import MealCard from "./MealCard";
-import FoodCard from "./FoodCard";
+import MealCard from "../MealCard";
+import FoodCard from "../FoodCard";
 
 import { useState } from "react";
-import MacroContextProvider from "./context";
-import DailyOverview from "./DailyOverview";
+import MacroContextProvider from "../context";
+import DailyOverview from "../DailyOverview";
 
 type foodProps = {
   uid: number;
@@ -16,7 +16,7 @@ type foodProps = {
   carbContent: number;
 };
 
-export default function Home() {
+export default function Home({ params: { date } }) {
   return (
     <>
       <MacroContextProvider>

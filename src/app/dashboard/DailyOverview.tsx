@@ -3,6 +3,7 @@
 import { PieChart } from "@mui/x-charts";
 import React, { useEffect, useState } from "react";
 import { useMacroContext } from "./context";
+import DatePicker from "./DatePicker";
 
 export default function DailyOverview() {
   const {
@@ -106,34 +107,39 @@ export default function DailyOverview() {
     dessertFoods,
   ]);
   return (
-    <div className="flex items-center justify-center p-7 m-7 border-4  rounded-xl ">
-      <PieChart
-        series={[
-          {
-            data: [
-              { value: dailyProtein, color: "blue", label: "Protein" },
-              { value: dailyCarbs, color: "purple", label: "Carbs" },
-              { value: dailyFat, color: "orange", label: "Fats" },
-            ],
-            innerRadius: 30,
-            outerRadius: 100,
-            paddingAngle: 5,
-            cornerRadius: 5,
-            startAngle: -90,
-            endAngle: 90,
-            cx: 300,
-            cy: 200,
-            highlightScope: { faded: "global", highlighted: "item" },
-            faded: { innerRadius: 30, additionalRadius: 0, color: "gray" },
-          },
-        ]}
-        margin={{ right: 5 }}
-        width={600}
-        height={400}
-        slotProps={{
-          legend: { hidden: true },
-        }}
-      />
+    <div className="p-7 m-7 border-4 rounded-xl">
+      <div className="flex items-center justify-center ">
+        <PieChart
+          series={[
+            {
+              data: [
+                { value: dailyProtein, color: "blue", label: "Protein" },
+                { value: dailyCarbs, color: "purple", label: "Carbs" },
+                { value: dailyFat, color: "orange", label: "Fats" },
+              ],
+              innerRadius: 0,
+              outerRadius: 100,
+              paddingAngle: 0,
+              cornerRadius: 0,
+              startAngle: -180,
+              endAngle: 180,
+              cx: 300,
+              cy: 200,
+              highlightScope: { faded: "global", highlighted: "item" },
+              faded: { innerRadius: 0, additionalRadius: 0, color: "gray" },
+            },
+          ]}
+          margin={{ right: 5 }}
+          width={600}
+          height={400}
+          slotProps={{
+            legend: { hidden: true },
+          }}
+        />
+      </div>
+      <div className="flex items-center justify-center">
+        <DatePicker />
+      </div>
     </div>
   );
 }

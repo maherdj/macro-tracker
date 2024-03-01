@@ -1,5 +1,7 @@
 "use client";
 
+import dayjs, { Dayjs } from "dayjs";
+
 import React, {
   Dispatch,
   SetStateAction,
@@ -49,6 +51,8 @@ type MacroContext = {
   setCarbs: React.Dispatch<React.SetStateAction<number>>;
   calories: number;
   setCalories: React.Dispatch<React.SetStateAction<number>>;
+  date: Date;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 };
 
 export const MacroContext = createContext<MacroContext | null>(null);
@@ -60,6 +64,7 @@ type MacroContextProviderProps = {
 export default function MacroContextProvider({
   children,
 }: MacroContextProviderProps) {
+  const [date, setDate] = React.useState<Date>(new Date());
   // meal total macro setState Hooks
   const [breakfastMacros, setBreakfastMacros] = useState<totalMacros>({
     proteinTotal: 0,
@@ -112,6 +117,8 @@ export default function MacroContextProvider({
         setCarbs,
         calories,
         setCalories,
+        date,
+        setDate,
       }}
     >
       {children}

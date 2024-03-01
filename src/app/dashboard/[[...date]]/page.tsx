@@ -4,6 +4,7 @@ import MealCard from "../MealCard";
 import FoodCard from "../FoodCard";
 
 import { useState } from "react";
+import { useMacroContext } from "../context";
 import MacroContextProvider from "../context";
 import DailyOverview from "../DailyOverview";
 
@@ -16,7 +17,7 @@ type foodProps = {
   carbContent: number;
 };
 
-export default function Home({ params: { date } }) {
+export default function Home({ params }) {
   return (
     <>
       <MacroContextProvider>

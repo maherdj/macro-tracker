@@ -11,17 +11,25 @@ import {
 } from "@/components/ui/popover";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 export default function DatePicker() {
   const { date, setDate } = useMacroContext();
 
   const router = useRouter();
 
-  useEffect(() => {
-    setDate(new Date());
-  }, []);
+  // useEffect(() => {
+  //   setDate(new Date());
+  // }, []);
 
+  const handleDayClick = (day: Date) => {
+    let dateString: string;
+    setDate(day);
+    dateString = day.toDateString();
+    router.push(`/dashboard/${dateString}`);
+
+    console.log("date: " + dateString);
+  };
   const handleChange = (e: React.FormEvent) => {
     e.preventDefault();
     let dateString: string;
@@ -29,32 +37,35 @@ export default function DatePicker() {
     let dateMonth: number;
     let dateYear: number;
 
-    dateDay = date.getDay();
-    dateMonth = date.getMonth();
-    dateYear = date.getFullYear();
+    dateString = date.toDateString();
 
-    dateString =
-      dateMonth.toString() + dateDay.toString() + dateYear.toString();
+    // dateDay = date.getDay();
+    // dateMonth = date.getMonth();
+    // dateYear = date.getFullYear();
 
-    console.log(
-      "Month:" +
-        dateMonth +
-        "   " +
-        "Day: " +
-        dateDay +
-        "   " +
-        "Year: " +
-        dateYear
-    );
-    setDate(date);
+    // dateString =
+    //   dateMonth.toString() + dateDay.toString() + dateYear.toString();
+
+    // console.log(
+    //   "Month:" +
+    //     dateMonth +
+    //     "   " +
+    //     "Day: " +
+    //     dateDay +
+    //     "   " +
+    //     "Year: " +
+    //     dateYear
+    // );
 
     router.push(`/dashboard/${dateString}`);
 
     console.log("date: " + dateString);
   };
 
+  const footer = <button onClick={(e) => handleChange(e)}>Go To Day</button>;
+
   return (
-    <form onSubmit={handleChange}>
+    <>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -69,15 +80,9 @@ export default function DatePicker() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            initialFocus
-          />
+          <Calendar mode="single" selected={date} onDayClick={handleDayClick} />
         </PopoverContent>
       </Popover>
-      <button>submit</button>
-    </form>
+    </>
   );
 }
